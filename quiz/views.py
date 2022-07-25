@@ -93,6 +93,15 @@ class QuizQuestion(APIView):
         serializer = QuestionSerializer(quiz, many=True)
         return Response(serializer.data)
 
+class QuestionListView(generics.ListAPIView):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer   
+    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    # permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsOwnerOrReadOnly, )
+    # filter_fields = ('quiz')
+    # search_fields = ('first_name', 'last_name', 'phone')
+
 class ParticipantAnswerListView(generics.ListAPIView):
     queryset = ParticipantAnswer.objects.all()
     serializer_class = ParticipantAnswerSerializer  

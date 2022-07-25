@@ -76,12 +76,11 @@ class ParticipantAnswerSerializer(serializers.ModelSerializer):
         if time_spent == 1:
             participant_ball = (ball_default - (ball_default // best_finishing_time * time_spent) + (ball_default / best_finishing_time))
             return participant_ball
-        elif time_spent >1:
+        elif time_spent >1 and time_spent <=20:
             participant_ball = (ball_default - (ball_default // best_finishing_time * time_spent))
             return participant_ball
         elif time_spent > best_finishing_time:
-            participant_ball == 0
-            return participant_ball
+            return ne_proiden
         else:
             return ne_proiden
 

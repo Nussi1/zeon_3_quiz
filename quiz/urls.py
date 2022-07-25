@@ -12,6 +12,7 @@ urlpatterns = [
   path('create-participant/', ParticipantCreateView.as_view()),
   path('list-participant/', ParticipantListView.as_view()),
   path('detail-participant/<int:pk>', ParticipantDetailView.as_view()),
+  path('list-question/', QuestionListView.as_view()),
   path('answer/', ParticipantAnswerListView.as_view()),
   path('', Quiz.as_view(), name='quiz'),
   path('r/<str:topic>/', RandomQuestion.as_view(), name='random' ),

@@ -2,9 +2,23 @@ from django.contrib import admin
 from .models import *
 from . import models
 
-admin.site.register(CustomUser)
-admin.site.register(Participant)
+# admin.site.register(Participant)
 admin.site.register(ParticipantAnswer)
+
+
+
+@admin.register(CustomUser)
+class CustomUserAdmin(admin.ModelAdmin):
+  fields = []
+  list_display = ['first_name', 'last_name', 'group', 'phone', 'email', 'rating', 'itog_ball', 'passed_tests']
+  list_filter = ['first_name', 'last_name', 'phone', 'group']
+
+@admin.register(Participant)
+class ParticipantAdmin(admin.ModelAdmin):
+  fields = []
+  list_display = ['first_name', 'last_name', 'group', 'phone', 'login', 'itog_ball', 'passed_tests']
+  list_filter = ['first_name', 'last_name', 'phone', 'group',]
+  
 
 @admin.register(models.Category)
 class CatAdmin(admin.ModelAdmin):
@@ -17,10 +31,13 @@ class QuizAdmin(admin.ModelAdmin):
 class AnswerInlineModel(admin.TabularInline):
     model = models.Answer
     fields = [ 'answer_text', 'is_right' ]
+    max_num = 4
+    min_num = 4
+    can_delete = False
 
 @admin.register(models.Question)
 class QuestionAdmin(admin.ModelAdmin):
-    fields = [ 'title', 'quiz', 'file']
+    fields = [ 'quiz', 'group', 'title', 'file', 'is_active']
     list_display = [ 'title', 'quiz', 'date_updated', 'file' ]
     inlines = [ AnswerInlineModel, ] 
 

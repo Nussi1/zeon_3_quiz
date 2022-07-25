@@ -13,8 +13,10 @@ class CustomUser(AbstractUser):
     username=None
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=255, blank=True, null=True)
+    group = models.ForeignKey(Group, default=None, on_delete=models.DO_NOTHING, null=True)
     itog_ball = models.CharField(max_length=255, blank=True, null=True)
     rating = models.CharField(max_length=255, blank=True, null=True)
+    passed_tests = models.IntegerField()
 
     objects = UserManager()
 
@@ -87,6 +89,7 @@ class Question(Updated):
 
     quiz = models.ForeignKey(
         Quizzes, related_name='question', on_delete=models.DO_NOTHING)
+    group = models.ForeignKey(Group, default=None, on_delete=models.DO_NOTHING, null=True)
     technique = models.IntegerField(
         choices=TYPE, default=0, verbose_name=_("Type of Question"))
     title = models.CharField(max_length=255, verbose_name=_("Title"))
@@ -97,7 +100,8 @@ class Question(Updated):
         auto_now_add=True, verbose_name=_("Date Created"))
     is_active = models.BooleanField(
         default=False, verbose_name=_("Active Status"))
-    
+    qwty_questions = models.IntegerField(default=0)
+    qwty_participants = models.IntegerField(default=0)
 
 
     def __str__(self):
@@ -121,6 +125,14 @@ class Answer(Updated):
 
     def __str__(self):
         return self.answer_text
+
+# class Test(models.Model):
+#     title = models.ForeignKey(Quizzes, default=None, on_delete=models.DO_NOTHING, null=True)
+#     group = models.ForeignKey(Group, default=None, on_delete=models.DO_NOTHING, null=True)
+#     question = models.ForeignKey(Question, default=None, on_delete=models.DO_NOTHING, null=True)
+
+
+
 
 class ParticipantAnswer(models.Model):
     participant = models.ForeignKey(Participant, default=None, on_delete=models.DO_NOTHING, null=True)
